@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github-mcp
+  namespace: tools
+spec:
+  rules:
+    - host: github-mcp.bongofett.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: github-mcp
+                port:
+                  number: 8080

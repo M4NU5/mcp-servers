@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: github-mcp
+  namespace: tools
+spec:
+  selector:
+    app: github-mcp
+  ports:
+    - port: 8080
+      targetPort: 8080
