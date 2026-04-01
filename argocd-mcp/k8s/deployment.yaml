@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-mcp
+  namespace: tools
+  labels:
+    app: argocd-mcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-mcp
+  template:
+    metadata:
+      labels:
+        app: argocd-mcp
+    spec:
+      containers:
+        - name: argocd-mcp
+          image: ghcr.io/argoproj-labs/mcp-for-argocd:v0.6.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: ARGOCD_BASE_URL
+              value: "https://argocd-server.argocd.svc.cluster.local"
+            - name: ARGOCD_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: argocd-mcp
+                  key: ARGOCD_API_TOKEN
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              value: "0"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
