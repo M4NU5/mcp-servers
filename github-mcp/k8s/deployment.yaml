@@ -21,7 +21,7 @@ spec:
           args:
             - http
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           env:
             - name: GITHUB_PERSONAL_ACCESS_TOKEN
               valueFrom:
