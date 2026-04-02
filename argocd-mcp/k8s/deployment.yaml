@@ -22,14 +22,12 @@ spec:
             - containerPort: 3000
           env:
             - name: ARGOCD_BASE_URL
-              value: "https://argocd-server.argocd.svc.cluster.local"
+              value: "http://argocd-server.argocd.svc.cluster.local"
             - name: ARGOCD_API_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: argocd-mcp
                   key: ARGOCD_API_TOKEN
-            - name: NODE_TLS_REJECT_UNAUTHORIZED
-              value: "0"
           resources:
             requests:
               cpu: 50m
