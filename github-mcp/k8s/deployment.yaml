@@ -19,8 +19,7 @@ spec:
         - name: github-mcp
           image: ghcr.io/github/github-mcp-server:latest
           args:
-            - --transport
-            - sse
+            - http
           ports:
             - containerPort: 8080
           env:
