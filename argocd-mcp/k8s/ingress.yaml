@@ -3,7 +3,15 @@ kind: Ingress
 metadata:
   name: argocd-mcp
   namespace: tools
+  annotations:
+    # HTTPS only, so the bearer token never crosses the LAN in cleartext.
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
+  tls:
+    - hosts:
+        - argocd-mcp.bongofett.com
+      secretName: bongofett-cert
   rules:
     - host: argocd-mcp.bongofett.com
       http:

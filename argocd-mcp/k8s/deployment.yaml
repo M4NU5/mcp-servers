@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: argocd-mcp
-          image: ghcr.io/argoproj-labs/mcp-for-argocd:v0.6.0
+          image: ghcr.io/argoproj-labs/mcp-for-argocd:v0.9.0
+          args: ["http", "--allowed-host-header", "argocd-mcp.bongofett.com"]
           ports:
             - containerPort: 3000
           env:
@@ -28,6 +29,14 @@ spec:
                 secretKeyRef:
                   name: argocd-mcp
                   key: ARGOCD_API_TOKEN
+            # Inbound auth: callers must send "Authorization: Bearer <token>".
+            - name: MCP_BIND_ADDRESS
+              value: "0.0.0.0"
+            - name: MCP_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: argocd-mcp
+                  key: MCP_AUTH_TOKEN
           resources:
             requests:
               cpu: 50m
